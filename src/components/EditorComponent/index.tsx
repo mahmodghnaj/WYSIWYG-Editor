@@ -1,19 +1,8 @@
-import { CSSProperties, FC, ReactNode, useState } from "react";
+import { FC, useState, useCallback } from "react";
 import { Editor, EditorState, convertToRaw, RichUtils } from "draft-js";
 import DefaultToolbar from "./components/DefaultToolbar";
-
-interface EditorComponentProps {
-  value?: EditorState;
-  onChange?: (state: EditorState) => void;
-  className?: string;
-  style?: CSSProperties;
-  renderToolbar?: ({
-    onToggle,
-  }: {
-    onToggle: (style: string) => void;
-  }) => ReactNode;
-}
-
+import { EditorComponentProps } from "./types";
+import "./MyEditor.css";
 const EditorComponent: FC<EditorComponentProps> = ({
   value,
   onChange,
@@ -24,19 +13,22 @@ const EditorComponent: FC<EditorComponentProps> = ({
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const isControlled = value !== undefined && onChange !== undefined;
 
-  const handleChange = (state: EditorState) => {
-    if (isControlled && onChange) {
-      onChange(state);
-    } else {
-      setEditorState(state);
-    }
-  };
+  const handleChange = useCallback(
+    (state: EditorState) => {
+      if (isControlled && onChange) onChange(state);
+      else setEditorState(state);
+    },
+    [isControlled, onChange]
+  );
 
-  const applyStyle = (style: string) => {
-    const currentState = isControlled ? value! : editorState;
-    const newState = RichUtils.toggleInlineStyle(currentState, style);
-    handleChange(newState);
-  };
+  const applyStyle = useCallback(
+    (style: string) => {
+      const currentState = isControlled ? value! : editorState;
+      const newState = RichUtils.toggleInlineStyle(currentState, style);
+      handleChange(newState);
+    },
+    [isControlled, value, editorState, handleChange]
+  );
 
   const handleSave = async () => {
     const content = convertToRaw(
@@ -57,10 +49,33 @@ const EditorComponent: FC<EditorComponentProps> = ({
         editorState={isControlled ? value! : editorState}
         onChange={handleChange}
         spellCheck={true}
+        blockStyleFn={() => {
+          return "custom-block";
+        }}
       />
-      <button onClick={handleSave} style={{ marginTop: "10px" }}>
-        Save Content
-      </button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginTop: "10px",
+        }}
+      >
+        <button
+          onClick={handleSave}
+          style={{
+            padding: "8px 16px",
+            borderRadius: "5px",
+            backgroundColor: "#007BFF",
+            color: "#fff",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "14px",
+            transition: "background-color 0.3s, transform 0.2s",
+          }}
+        >
+          Save Content
+        </button>
+      </div>
     </div>
   );
 };
