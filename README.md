@@ -1,51 +1,65 @@
-# React + TypeScript + Vite
+# WYSIWYG Editor Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Demo Live
 
-Currently, two official plugins are available:
+You can view a live demo of the project here: [wysiwyg-editor-flax.vercel.app](https://wysiwyg-editor-flax.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisites
 
-## Expanding the ESLint configuration
+Ensure that you have the following installed on your system:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Node.js (>=16.x)
+- npm or yarn package manager
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/mahmodghnaj/WYSIWYG-Editor.git
+   cd WYSIWYG-Editor
+
+   ```
+
+2. Install the dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+## Running the Project
+
+To start the development server, run:
+
+```bash
+npm run dev
+# or
+yarn dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The application will be available at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Running Tests
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+To run the tests for the project, use the following command:
+
+```bash
+npm test
+# or
+yarn test
 ```
-# WYSIWYG-Editor
+
+### Watch Mode
+
+For continuous testing during development, use the following command:
+
+```bash
+npm run test:watch
+# or
+yarn test:watch
+```
+
+## Author
+
+Mahmoud
